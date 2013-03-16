@@ -12,37 +12,28 @@ public interface ProgressEventHandler extends EventHandler {
 		private int total;
 		private boolean lengthComputable;
 
-//		public ProgressEvent(int loaded, int total, boolean lengthComputable) {
-//			this.loaded = loaded;
-//			this.total = total;
-//			this.lengthComputable = lengthComputable;
-//		}
-		
-		public ProgressEvent() {
-		}
-
-		public int getLoaded() {
-			return loaded;
-		}
-
 		public void setLoaded(int loaded) {
 			this.loaded = loaded;
-		}
-
-		public int getTotal() {
-			return total;
 		}
 
 		public void setTotal(int total) {
 			this.total = total;
 		}
 
-		public boolean isLengthComputable() {
-			return lengthComputable;
-		}
-
 		public void setLengthComputable(boolean lengthComputable) {
 			this.lengthComputable = lengthComputable;
+		}
+
+		public int getLoaded() {
+			return loaded;
+		}
+
+		public int getTotal() {
+			return total;
+		}
+
+		public boolean isLengthComputable() {
+			return lengthComputable;
 		}
 
 		@Override

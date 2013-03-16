@@ -97,15 +97,11 @@ public class FileReader {
 				handler);
 	}
 
-	public void readFile(FileElement file, LoadEndEventHandler handler) {
-		addLoadEndEventHandler(handler);
-		final BlobElement slice = file.slice(0, file.getSize());
-		this.readAsText(slice);
+	public void readFile(FileElement file) {
+		readFile(file, 0, file.getSize());
 	}
 
-	public void readFile(FileElement file, int start, int end,
-			LoadEndEventHandler handler) {
-		addLoadEndEventHandler(handler);
+	public void readFile(FileElement file, int start, int end) {
 		final BlobElement slice = file.slice(start, end);
 		this.readAsText(slice);
 	}
@@ -119,25 +115,19 @@ public class FileReader {
 	private final native void addAbortEventListener()/*-{
 		var readerElement = this.@gwt.html5.file.client.FileReader::readerElement;
 		var reader = this;
-		readerElement
-				.addEventListener(
-						'abort',
-						function() {
-							var event = @gwt.html5.file.client.handler.AbortEventHandler.AbortEvent::new();
-							reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
-						}, true);
+		readerElement.onabort = function() {
+			var event = @gwt.html5.file.client.handler.AbortEventHandler.AbortEvent::new()();
+			reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
+		};
 	}-*/;
 
 	private final native void addErrorEventListener()/*-{
 		var readerElement = this.@gwt.html5.file.client.FileReader::readerElement;
 		var reader = this;
-		readerElement
-				.addEventListener(
-						'error',
-						function() {
-							var event = @gwt.html5.file.client.handler.ErrorEventHandler.ErrorEvent::new()();
-							reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
-						}, true);
+		readerElement.onerror = function() {
+			var event = @gwt.html5.file.client.handler.ErrorEventHandler.ErrorEvent::new()();
+			reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
+		};
 	}-*/;
 
 	private final native void addLoadEndEventListener()/*-{
@@ -153,37 +143,31 @@ public class FileReader {
 	private final native void addLoadEventListener()/*-{
 		var readerElement = this.@gwt.html5.file.client.FileReader::readerElement;
 		var reader = this;
-		readerElement
-				.addEventListener(
-						'load',
-						function() {
-							var event = @gwt.html5.file.client.handler.LoadEventHandler.LoaEvent::new();
-							reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
-						}, true);
+		readerElement.onload = function() {
+			var event = @gwt.html5.file.client.handler.LoadEventHandler.LoaEvent::new()();
+			reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
+		};
 	}-*/;
 
 	private final native void addProgressEventListener()/*-{
 		var readerElement = this.@gwt.html5.file.client.FileReader::readerElement;
 		var reader = this;
-		readerElement
-				.addEventListener(
-						'progress',
-						function() {
-							var event = @gwt.html5.file.client.handler.ProgressEventHandler.ProgressEvent::new();
-							reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
-						}, true);
+		readerElement.onprogress = function(e) {
+			var event = @gwt.html5.file.client.handler.ProgressEventHandler.ProgressEvent::new()();
+			event.@gwt.html5.file.client.handler.ProgressEventHandler.ProgressEvent::setLengthComputable(Z)(e.lengthComputable);
+			event.@gwt.html5.file.client.handler.ProgressEventHandler.ProgressEvent::setLoaded(I)(e.loaded);
+			event.@gwt.html5.file.client.handler.ProgressEventHandler.ProgressEvent::setTotal(I)(e.total);
+			reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
+		};
 	}-*/;
 
 	private final native void addLoadStartEventListener()/*-{
 		var readerElement = this.@gwt.html5.file.client.FileReader::readerElement;
 		var reader = this;
-		readerElement
-				.addEventListener(
-						'loadstart',
-						function() {
-							var event = @gwt.html5.file.client.handler.LoadStartEventHandler.LoadStartEvent::new();
-							reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
-						}, true);
+		readerElement.onloadstart = function() {
+			var event = @gwt.html5.file.client.handler.LoadStartEventHandler.LoadStartEvent::new()();
+			reader.@gwt.html5.file.client.FileReader::fireEvent(Ljava/lang/Object;)(event);
+		};
 	}-*/;
 
 }
